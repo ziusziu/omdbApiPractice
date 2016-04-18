@@ -1,8 +1,13 @@
 package siu.example.com.omdbapi;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import okhttp3.OkHttpClient;
@@ -12,6 +17,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import siu.example.com.omdbapi.omdb.Omdb;
+import siu.example.com.omdbapi.omdb.omdbService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,10 +29,12 @@ public class MainActivity extends AppCompatActivity {
     private static final String API_YEAR = "2016";
     private static final String API_PLOT = "short";
     private static final String API_FORMAT = "json";
-    Omdb omdb;
-    Retrofit retrofit;
-    OkHttpClient client;
-    TextView textView;
+    private static Omdb omdb;
+    private static Retrofit retrofit;
+    private static OkHttpClient client;
+    private static TextView mTextView;
+    private static RelativeLayout mRelativeLayout;
+    private static Toolbar mToolBar;
 
 
     @Override
@@ -33,11 +42,57 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        basicHttpLogging();
-        textView = (TextView)findViewById(R.id.textView);
 
         Log.d(TAG, "onCreate: ----->>>" + BuildConfig.THE_MOVIE_API_TOKEN);
 
+        initializeViews();
+        basicHttpLogging();
+        omdbApiCall();
+        initializeToolBar();
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_options, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch(id){
+            case R.id.action_info_details:
+                Snackbar snackbarDownload = Snackbar
+                        .make(mRelativeLayout, "Info Details Clicked", Snackbar.LENGTH_SHORT);
+                snackbarDownload.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void initializeViews(){
+        mTextView = (TextView)findViewById(R.id.textView);
+        mRelativeLayout = (RelativeLayout)findViewById(R.id.main_relativeLayout);
+        mToolBar = (Toolbar)findViewById(R.id.main_toolBar);
+    }
+
+    private void initializeToolBar(){
+        setSupportActionBar(mToolBar);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+    }
+
+    private void basicHttpLogging(){
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        client = new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build();
+    }
+
+    private void omdbApiCall(){
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -50,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Omdb> call, Response<Omdb> response) {
                 if(response.isSuccessful()){
                     omdb = response.body();
-                    textView.setText(omdb.getDirector());
+                    mTextView.setText(omdb.getDirector());
                 }
             }
 
@@ -59,15 +114,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-    }
-
-    private void basicHttpLogging(){
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
-        client = new OkHttpClient.Builder()
-                .addInterceptor(logging)
-                .build();
     }
 
 

@@ -1,4 +1,4 @@
-package siu.example.com.omdbapi;
+package siu.example.com.omdbapi.omdb;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

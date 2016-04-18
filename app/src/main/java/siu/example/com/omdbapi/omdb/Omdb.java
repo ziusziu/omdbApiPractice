@@ -1,4 +1,4 @@
-package siu.example.com.omdbapi;
+package siu.example.com.omdbapi.omdb;
 
 /**
  * Created by samsiu on 4/12/16.
