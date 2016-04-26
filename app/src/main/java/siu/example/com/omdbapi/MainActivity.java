@@ -1,6 +1,7 @@
 package siu.example.com.omdbapi;
 
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
     private static Toolbar mToolBar;
     private static List<Omdb> mOmdb;
     private static RecyclerView mRecyclerView;
+
+    private String[] mPlanetTitles;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
         mRelativeLayout = (RelativeLayout)findViewById(R.id.main_relativeLayout);
         mToolBar = (Toolbar)findViewById(R.id.main_toolBar);
         mRecyclerView = (RecyclerView)findViewById(R.id.main_recyclerView);
+        mPlanetTitles = getResources().getStringArray(R.array.planets_array);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.main_drawer_layout);
+        mDrawerList = (ListView)findViewById(R.id.main_drawer_left_drawer);
     }
 
     private void initializeToolBar(){
