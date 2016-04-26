@@ -56,16 +56,18 @@ public class MainActivity extends AppCompatActivity {
         basicHttpLogging();
         omdbApiCall();
         initializeToolBar();
+        RecyclerViewSetup();
 
 
+    }
+
+    private void RecyclerViewSetup(){
         mOmdb = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(mOmdb);
         mRecyclerView.setAdapter(recyclerViewAdapter);
-
-
     }
 
     @Override
