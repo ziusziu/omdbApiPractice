@@ -1,7 +1,3 @@
 <resources>
     <string name="app_name">OMDbAPI</string>
-    <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Mars</item>
-    </string-array>
 </resources>

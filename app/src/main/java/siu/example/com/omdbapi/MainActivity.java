@@ -47,10 +47,6 @@ public class MainActivity extends AppCompatActivity {
     private static List<Omdb> mOmdb;
     private static RecyclerView mRecyclerView;
 
-    private String[] mPlanetTitles;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,16 +60,6 @@ public class MainActivity extends AppCompatActivity {
         omdbApiCall();
         initializeToolBar();
         RecyclerViewSetup();
-
-        ObjectDrawerItem[] drawerItem = new ObjectDrawerItem[3];
-        drawerItem[0] = new ObjectDrawerItem(R.drawable.android_arms, "Create");
-        drawerItem[1] = new ObjectDrawerItem(R.drawable.android_arms, "Read");
-        drawerItem[2] = new ObjectDrawerItem(R.drawable.android_arms, "Help");
-
-        DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(this, R.layout.drawer_listview_item_row, drawerItem);
-        mDrawerList.setAdapter(adapter);
-
-
     }
 
     private void RecyclerViewSetup(){
@@ -110,9 +96,6 @@ public class MainActivity extends AppCompatActivity {
         mRelativeLayout = (RelativeLayout)findViewById(R.id.main_relativeLayout);
         mToolBar = (Toolbar)findViewById(R.id.main_toolBar);
         mRecyclerView = (RecyclerView)findViewById(R.id.main_recyclerView);
-        mPlanetTitles = getResources().getStringArray(R.array.planets_array);
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.main_drawer_layout);
-        mDrawerList = (ListView)findViewById(R.id.main_drawer_left_drawer);
     }
 
     private void initializeToolBar(){
