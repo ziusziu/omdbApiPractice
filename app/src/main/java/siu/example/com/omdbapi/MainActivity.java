@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(this, R.layout.drawer_listview_item_row, drawerItem);
         mDrawerList.setAdapter(adapter);
 
-        
+
     }
 
     private void RecyclerViewSetup(){
