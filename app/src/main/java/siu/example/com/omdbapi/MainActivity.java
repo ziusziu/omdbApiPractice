@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static Retrofit retrofit;
     private static OkHttpClient client;
     private static TextView mTextView;
-    private static RelativeLayout mRelativeLayout;
     private static Toolbar mToolBar;
     private static List<Omdb> mOmdb;
     private static RecyclerView mRecyclerView;
@@ -53,15 +52,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initializeViews();
+        setSupportActionBar(mToolBar);
 
         Log.d(TAG, "onCreate: ----->>>" + BuildConfig.THE_MOVIE_API_TOKEN);
 
-        initializeViews();
-        basicHttpLogging();
-        omdbApiCall();
-        RecyclerViewSetup();
-
-        setSupportActionBar(mToolBar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, mToolBar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -72,32 +67,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        basicHttpLogging();
+        omdbApiCall();
+        RecyclerViewSetup();
 
     }
 
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
     @Override
     public void onBackPressed() {
@@ -121,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(id){
             case R.id.action_info_details:
                 Snackbar snackbarDownload = Snackbar
-                        .make(mRelativeLayout, "Info Details Clicked", Snackbar.LENGTH_SHORT);
+                        .make(mRecyclerView, "Info Details Clicked", Snackbar.LENGTH_SHORT);
                 snackbarDownload.show();
                 return true;
             default:
@@ -129,10 +104,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 
     private void initializeViews(){
         mTextView = (TextView)findViewById(R.id.textView);
-        mRelativeLayout = (RelativeLayout)findViewById(R.id.main_relativeLayout);
         mToolBar = (Toolbar)findViewById(R.id.main_toolBar);
         mRecyclerView = (RecyclerView)findViewById(R.id.main_recyclerView);
     }
